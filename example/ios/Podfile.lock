@@ -1,0 +1,34 @@
+PODS:
+  - Flutter (1.0.0)
+  - thermal_printer (0.0.1):
+    - Flutter
+  - flutter_star_prnt (0.0.1):
+    - Flutter
+  - network_info_plus (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - thermal_printer (from `.symlinks/plugins/thermal_printer/ios`)
+  - flutter_star_prnt (from `.symlinks/plugins/flutter_star_prnt/ios`)
+  - network_info_plus (from `.symlinks/plugins/network_info_plus/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  thermal_printer:
+    :path: ".symlinks/plugins/thermal_printer/ios"
+  flutter_star_prnt:
+    :path: ".symlinks/plugins/flutter_star_prnt/ios"
+  network_info_plus:
+    :path: ".symlinks/plugins/network_info_plus/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
+  thermal_printer: 72176df8340825c736b5768fce1591e8884e456e
+  flutter_star_prnt: c4ea89b6b9ccb708624f5830c9d34b7ee1165999
+  network_info_plus: b78876159360f5580608c2cea620d6ceffabd0ad
+
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+
+COCOAPODS: 1.11.3

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="fail_connect_bt">Cannot establish Bluetooth connection</string>
+    <string name="lost_connection_bt">Bluetooth connection lost</string>
+    <string name="not_permissions">Must accept all permissions in order to the app works</string>
+    <string name="fail_write_data">"Couldn't send data to the other device"</string>
+    <string name="user_refuse_perm">User refused to give USB device permission</string>
+    <string name="device_off">USB device has been turned off</string>
+    <string name="not_usb_manager">USB Manager is not initialized while trying to get devices list</string>
+    <string name="connected_device">Connected device</string>
+</resources>
