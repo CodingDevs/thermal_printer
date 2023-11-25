@@ -3,6 +3,12 @@ description: A flutter plugin that prints esc commands to printers in different 
 version: 1.0.0
 homepage: https://github.com/codingdevs/thermal_printer
 
+# This package supports all platforms listed below.
+platforms:
+  android:
+  ios:
+  windows:
+
 environment:
   sdk: '>=2.18.4 <4.0.0'
   flutter: ">=1.20.0"
