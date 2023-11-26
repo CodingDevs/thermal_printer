@@ -1,3 +1,11 @@
+## 1.0.2
+
+* Bumped dart_ping to dart_ping: ^9.0.1
+
+## 1.0.1
+
+* Added Platforms
+* 
 ## 1.0.0
 
 * Initial Release
