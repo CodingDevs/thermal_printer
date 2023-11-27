@@ -1,3 +1,7 @@
+## 1.0.4
+
+* fixed ios build
+
 ## 1.0.3
 
 * fixed ios build error

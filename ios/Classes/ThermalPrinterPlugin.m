@@ -1,4 +1,4 @@
-#import ThermalPrinter.h
+#import "ThermalPrinter.h"
 #import "ConnecterManager.h"
 
 @interface ThermalPrinterPlugin ()
