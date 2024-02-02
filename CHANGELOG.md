@@ -1,3 +1,7 @@
+## 1.0.5
+
+* fixed windows build
+
 ## 1.0.4
 
 * fixed ios build
