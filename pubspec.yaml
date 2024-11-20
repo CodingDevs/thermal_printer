@@ -1,7 +1,7 @@
-name: thermal_printer
+name: printer_service
 description: A flutter plugin that prints esc commands to printers in different platforms such as android, ios, windows and different interfaces Bluetooth and BLE, TCP and USB
 version: 1.0.5
-homepage: https://github.com/codingdevs/thermal_printer
+homepage: https://github.com/arpitsharma007/printer_service/
 
 # This package supports all platforms listed below.
 platforms:

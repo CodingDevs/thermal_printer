@@ -125,6 +125,28 @@ namespace
         return result->Success(EncodableValue(success));
       }
     }
+    else if (method_call.method_name().compare("getDefaultPrinter") == 0)
+    {
+      wchar_t defaultPrinterName[MAX_PATH];  // Corrected to wchar_t buffer
+
+      DWORD size = MAX_PATH;
+      if (GetDefaultPrinter(defaultPrinterName, &size) > 0) {  // Pass the buffer directly
+          wprintf(L"Default Printer: %s\n", defaultPrinterName);  // Use wprintf for wide strings
+          int utf8Length = WideCharToMultiByte(CP_UTF8, 0, defaultPrinterName, -1, NULL, 0, NULL, NULL);
+        if (utf8Length > 0) {
+            std::string utf8PrinterName(utf8Length, 0);
+            WideCharToMultiByte(CP_UTF8, 0, defaultPrinterName, -1, &utf8PrinterName[0], utf8Length, NULL, NULL);
+
+            // Return the UTF-8 encoded printer name
+            return result->Success(EncodableValue(utf8PrinterName));
+        } else {
+            return result->Error("CONVERSION_ERROR", "Failed to convert printer name to UTF-8.");
+        }
+      } else {
+          printf("Error getting default printer\n");
+      }
+
+    }
     else
     {
       result->NotImplemented();

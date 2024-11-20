@@ -1,6 +1,10 @@
-# thermal_printer
+# Note:
+This is a forked project of: https://pub.dev/packages/thermal_printer
+This has an additional function to get default printer selected in windows in case of USB with function getDefaultPrinter() in dart
 
-[![Pub Version](https://img.shields.io/badge/pub-v1.0.5-green)](https://pub.dev/packages/thermal_printer)
+# Printer_service
+
+<!-- [![Pub Version](https://img.shields.io/badge/pub-v1.0.5-green)](https://pub.dev/packages/thermal_printer) -->
 
 A library to discover printers, and send printer commands.
 

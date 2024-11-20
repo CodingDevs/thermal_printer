@@ -186,4 +186,10 @@ class TcpPrinterConnector implements PrinterConnector<TcpPrinterInput> {
       },
     );
   }
+  
+  @override
+  Future<String> getDefaultPrinter() {
+    // TODO: implement getDefaultPrinter
+    throw UnimplementedError();
+  }
 }

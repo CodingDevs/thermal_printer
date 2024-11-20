@@ -260,4 +260,10 @@ class BluetoothPrinterConnector implements PrinterConnector<BluetoothPrinterInpu
       return false;
     }
   }
+  
+  @override
+  Future<String> getDefaultPrinter() {
+    // TODO: implement getDefaultPrinter
+    throw UnimplementedError();
+  }
 }

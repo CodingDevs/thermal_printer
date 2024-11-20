@@ -25,6 +25,16 @@ class PrinterManager {
     }
   }
 
+  Future<String> getDefaultPrinter({PrinterType type = PrinterType.usb}) async {
+    if (type == PrinterType.bluetooth && (Platform.isIOS || Platform.isAndroid)) {
+      return await bluetoothPrinterConnector.getDefaultPrinter();
+    } else if (type == PrinterType.usb && (Platform.isAndroid || Platform.isWindows)) {
+      return await usbPrinterConnector.getDefaultPrinter();
+    } else {
+      return await tcpPrinterConnector.getDefaultPrinter();
+    }
+  }
+
   Future<bool> connect({required PrinterType type, required BasePrinterInput model}) async {
     if (type == PrinterType.bluetooth && (Platform.isIOS || Platform.isAndroid)) {
       try {
