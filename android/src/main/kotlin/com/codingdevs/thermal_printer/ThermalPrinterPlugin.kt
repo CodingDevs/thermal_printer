@@ -13,7 +13,7 @@ import android.os.Looper
 import android.os.Message
 import android.util.Log
 import android.widget.Toast
-import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.startActivityForResult
 import com.codingdevs.thermal_printer.bluetooth.BluetoothConnection
@@ -52,7 +52,7 @@ class ThermalPrinterPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.Re
     private var requestPermissionBT: Boolean = false
     private var isBle: Boolean = false
     private var isScan: Boolean = false
-    lateinit var adapter: USBPrinterService
+    private lateinit var adapter: USBPrinterService
     private lateinit var bluetoothService: BluetoothService
 
 
@@ -92,7 +92,7 @@ class ThermalPrinterPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.Re
                                 try {
                                     val result = msg.obj as Result?
                                     result?.success(true)
-                                } catch (e: Exception) {
+                                } catch (_: Exception) {
                                 }
                             eventSink?.success(2)
                             bluetoothService.removeReconnectHandlers()
@@ -113,7 +113,7 @@ class ThermalPrinterPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.Re
                                 try {
                                     val result = msg.obj as Result?
                                     result?.success(false)
-                                } catch (e: Exception) {
+                                } catch (_: Exception) {
                                 }
                             eventSink?.success(0)
                         }
@@ -156,7 +156,7 @@ class ThermalPrinterPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.Re
 
     }
 
-    override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {
+    override fun onDetachedFromEngine(binding: FlutterPlugin.FlutterPluginBinding) {
         channel.setMethodCallHandler(null)
         messageChannel?.setStreamHandler(null)
         messageUSBChannel?.setStreamHandler(null)
@@ -168,11 +168,11 @@ class ThermalPrinterPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.Re
         adapter.setHandler(null)
     }
 
-    override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
-        channel = MethodChannel(flutterPluginBinding.binaryMessenger, methodChannel)
+    override fun onAttachedToEngine(flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
+        channel = MethodChannel(flutterPluginBinding.binaryMessenger, METHOD_CHANNEL)
         channel.setMethodCallHandler(this)
 
-        messageChannel = EventChannel(flutterPluginBinding.binaryMessenger, eventChannelBT)
+        messageChannel = EventChannel(flutterPluginBinding.binaryMessenger, EVENT_CHANNEL_BT)
         messageChannel?.setStreamHandler(object : EventChannel.StreamHandler {
 
             override fun onListen(p0: Any?, sink: EventChannel.EventSink) {
@@ -184,7 +184,7 @@ class ThermalPrinterPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.Re
             }
         })
 
-        messageUSBChannel = EventChannel(flutterPluginBinding.binaryMessenger, eventChannelUSB)
+        messageUSBChannel = EventChannel(flutterPluginBinding.binaryMessenger, EVENT_CHANNEL_USB)
         messageUSBChannel?.setStreamHandler(object : EventChannel.StreamHandler {
 
             override fun onListen(p0: Any?, sink: EventChannel.EventSink) {
@@ -203,7 +203,8 @@ class ThermalPrinterPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.Re
         bluetoothService = BluetoothService.getInstance(bluetoothHandler)
     }
 
-    override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
+    override fun onMethodCall(call: MethodCall, result: Result) {
         isScan = false
         when {
             call.method.equals("getBluetoothList") -> {
@@ -315,6 +316,7 @@ class ThermalPrinterPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.Re
         return true
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun getUSBDeviceList(result: Result) {
         val usbDevices: List<UsbDevice> = adapter.deviceList
         val list = ArrayList<HashMap<*, *>>()
@@ -379,6 +381,8 @@ class ThermalPrinterPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.Re
             permissions.add(Manifest.permission.BLUETOOTH_SCAN)
             permissions.add(Manifest.permission.BLUETOOTH_CONNECT)
         }
+
+        if (context == null || currentActivity == null) return false
 
         if (!hasPermissions(context, *permissions.toTypedArray())) {
             ActivityCompat.requestPermissions(currentActivity!!, permissions.toTypedArray(), PERMISSION_ALL)
@@ -467,9 +471,9 @@ class ThermalPrinterPlugin : FlutterPlugin, MethodCallHandler, PluginRegistry.Re
     companion object {
         const val PERMISSION_ALL = 1
         const val PERMISSION_ENABLE_BLUETOOTH = 999
-        const val methodChannel = "com.codingdevs.thermal_printer"
-        const val eventChannelBT = "com.codingdevs.thermal_printer/bt_state"
-        const val eventChannelUSB = "com.codingdevs.thermal_printer/usb_state"
+        const val METHOD_CHANNEL = "com.codingdevs.thermal_printer"
+        const val EVENT_CHANNEL_BT = "com.codingdevs.thermal_printer/bt_state"
+        const val EVENT_CHANNEL_USB = "com.codingdevs.thermal_printer/usb_state"
 
     }
 }

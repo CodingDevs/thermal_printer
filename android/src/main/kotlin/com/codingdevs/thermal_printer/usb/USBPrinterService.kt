@@ -7,10 +7,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.hardware.usb.*
+import android.os.Build
 import android.os.Handler
 import android.util.Base64
 import android.util.Log
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.codingdevs.thermal_printer.R
 import java.nio.charset.Charset
 import java.util.*
@@ -67,17 +69,22 @@ class USBPrinterService private constructor(private var mHandler: Handler?) {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun init(reactContext: Context?) {
         mContext = reactContext
         mUSBManager = mContext!!.getSystemService(Context.USB_SERVICE) as UsbManager
         mPermissionIndent = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.S) {
-            PendingIntent.getBroadcast(mContext, 0, Intent(ACTION_USB_PERMISSION), PendingIntent.FLAG_MUTABLE)
+            PendingIntent.getBroadcast(mContext, 0, Intent(ACTION_USB_PERMISSION),
+                PendingIntent.FLAG_IMMUTABLE)
         } else {
-            PendingIntent.getBroadcast(mContext, 0, Intent(ACTION_USB_PERMISSION), 0)
+            PendingIntent.getBroadcast(mContext, 0, Intent(ACTION_USB_PERMISSION),
+                PendingIntent.FLAG_IMMUTABLE)
         }
         val filter = IntentFilter(ACTION_USB_PERMISSION)
         filter.addAction(UsbManager.ACTION_USB_DEVICE_DETACHED)
-        mContext!!.registerReceiver(mUsbDeviceReceiver, filter)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            mContext!!.registerReceiver(mUsbDeviceReceiver, filter, Context.RECEIVER_EXPORTED)
+        }
         Log.v(LOG_TAG, "ESC/POS Printer initialized")
     }
 
