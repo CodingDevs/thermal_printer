@@ -11,7 +11,7 @@ platforms:
 
 environment:
   sdk: '>=3.3.0 <4.0.0'
-  flutter: ">=1.20.0"
+  flutter: ">=3.44.0"
 
 dependencies:
   flutter:
@@ -20,7 +20,7 @@ dependencies:
   enum_to_string: ^2.2.1
   image: ^4.5.4
 
-  network_info_plus: ^7.0.0
+  network_info_plus: ^8.2.1
   ping_discover_network_forked: ^0.0.1
   rxdart: ^0.28.0
   gbk_codec: ^0.4.0

@@ -6,19 +6,19 @@ allprojects {
 }
 
 rootProject.buildDir = "../build"
-// AGGIUNTO PER FORZARE LA COMPILAZIONE SDK A 36 DELLE LIBRERIE INCLUSE NEL PROGETTO FLUTTER CHE NON SONO GESTIBILI TECNICAMENTE
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
 subprojects {
     afterEvaluate { project ->
-        if (project.hasProperty('android')) {
+        if (project.hasProperty("android")) {
             project.android {
-                compileSdk 36
+                compileSdkVersion 36
             }
         }
     }
 }
-subprojects {
-    project.buildDir = "${rootProject.buildDir}/${project.name}"
-}
+
 subprojects {
     project.evaluationDependsOn(":app")
 }

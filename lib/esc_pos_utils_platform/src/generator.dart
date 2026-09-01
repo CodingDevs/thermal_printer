@@ -65,7 +65,14 @@ class Generator {
 
   Uint8List _encode(String text, {bool isKanji = false}) {
     // replace some non-ascii characters
-    text = text.replaceAll("’", "'").replaceAll("´", "'").replaceAll("»", '"').replaceAll(" ", ' ').replaceAll("•", '.').replaceAll("・", '.');
+    text = text
+        .replaceAll('€', String.fromCharCode(0x80))
+        .replaceAll("’", "'")
+        .replaceAll("´", "'")
+        .replaceAll("»", '"')
+        .replaceAll(" ", ' ')
+        .replaceAll("•", '.')
+        .replaceAll("・", '.');
     if (!isKanji) {
       return latin1.encode(text);
     } else {
@@ -606,7 +613,7 @@ class Generator {
           isNextRow = true;
         } else {
           bytes += _text(
-            _encode(cols[i].text),
+            encodedToPrint,
             styles: cols[i].styles,
             colInd: colInd,
             colWidth: cols[i].width,
